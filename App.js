@@ -2,7 +2,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/screens/Home";
 import About from "./src/screens/About";
-import Contact from "./src/screens/Contact";
 import Course from "./src/screens/Course";
 import UserData from "./src/screens/UserData";
 import {
@@ -11,6 +10,9 @@ import {
   Nunito_700Bold,
 } from "@expo-google-fonts/nunito";
 import AppLoading from "expo-app-loading";
+import Login from "./src/screens/Login";
+import Signup from "./src/screens/Signup";
+import CourseDetails from "./src/screens/CourseDetails";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -78,8 +80,30 @@ export default function App() {
           component={About}
         />
 
-        {/* Contact screen */}
-        <Stack.Screen name="Contact" component={Contact} />
+        {/* Login screen */}
+        <Stack.Screen
+          options={{
+            headerShown: false,
+          }}
+          name="Login"
+          component={Login}
+        />
+
+        {/* Login screen */}
+        <Stack.Screen name="Signup" component={Signup} />
+
+        <Stack.Screen
+  options={{
+    headerTitleStyle: {
+      fontSize: 25,
+      fontFamily: "Nunito_600SemiBold",
+    },
+    headerTitleAlign: "center",
+  }}
+  name="CourseDetails"
+  component={CourseDetails}
+/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );

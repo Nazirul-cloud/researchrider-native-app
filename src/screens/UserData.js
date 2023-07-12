@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     // height: 350,
     backgroundColor: "#fff",
     borderRadius: 5,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
   },
   bioDataContainer: {
     width: "100%",
@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   idNumber: {
     fontSize: 20,
     color: "rgba(255, 255, 255, 0.5)",
-
     paddingRight: 10,
   },
   bioData: {
@@ -107,10 +106,13 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   mainHeader: {
-    fontSize: 30,
-    color: "#a18ce5",
-    textAlign: "center",
-    paddingVertical: 50,
+    fontSize: 18,
+    color: "#344055",
+    fontWeight: "500",
+    fontFamily: "Nunito_700Bold",
+    paddingLeft: 20,
+    paddingVertical: 10,
+    textTransform: "uppercase",
   },
   imgContainer: {
     padding: 10,

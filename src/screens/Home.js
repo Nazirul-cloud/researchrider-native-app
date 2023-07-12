@@ -1,38 +1,23 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import Menu from "../component/Menu";
+import Carousel from "../component/Carousel";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = (props) => {
-  const description =
-    "Research Rider provides various products, services, and supports which are highly based on research and ICT platforms.";
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <View style={styles.homeTop}>
-        <Image
-          resizeMode="contain"
-          style={styles.headerImg}
-          source={require("../../assets/1.png")}
-        />
+      <View style={styles.contain}>
+        <Carousel />
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.headerTitle}>WELCOME TO</Text>
-        <Text
-          style={[
-            styles.headerTitle,
-            {
-              fontSize: 34,
-              color: "#0255df",
-              marginTop: 20,
-            },
-          ]}
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => navigation.navigate("Login")}
         >
-          {props.websiteName}
-        </Text>
-        <Text style={styles.paraStyle}>{description}</Text>
-      </View>
-      <View style={styles.menuStyle}>
-        <View style={styles.lineStyle}></View>
-        <Menu />
+          <Text style={styles.buttonText}>LOGIN / SIGN UP</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -41,56 +26,38 @@ const Home = (props) => {
 export default Home;
 
 const styles = StyleSheet.create({
+  contain: {
+    marginTop: 80,
+  },
+
   container: {
     height: "100%",
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     paddingHorizontal: 20,
     backgroundColor: "#fff",
     textAlign: "center",
   },
 
-  homeTop: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 10,
-  },
-
-  headerImg: {
-    height: undefined,
-    width: "100%",
-    aspectRatio: 1.2,
-    display: "flex",
-    alignItems: "stretch",
-    borderRadius: 10,
-    marginTop: 80,
-  },
-  headerTitle: {
-    fontSize: 30,
-    color: "#0255df",
-    fontWeight: "600",
-    textTransform: "uppercase",
-  },
-  paraStyle: {
-    textAlign: "left",
-    fontSize: 20,
-    color: "#7d7d7d",
-    marginTop: 30,
-    paddingBottom: 200,
-    lineHeight: 26,
-  },
-  lineStyle: {
-    marginBottom: 10,
-    borderWidth: 0.5,
-    borderColor: "lightgrey",
-  },
-  textContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   menuStyle: {
     marginVertical: 20,
+  },
+
+  buttonContainer: {
+    width: "100%",
+  },
+  buttonStyle: {
+    backgroundColor: "#809fff",
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 20,
+    color: "#eee",
+    textTransform: "uppercase",
   },
 });

@@ -26,7 +26,7 @@ const Menu = () => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.buttonStyle}
         onPress={() => navigation.navigate("Group")}
       >
@@ -34,7 +34,7 @@ const Menu = () => {
           style={styles.iconStyle}
           source={require("../../assets/group.png")}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TouchableOpacity
         style={styles.buttonStyle}
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   menuContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+    paddingVertical: 10,
   },
 
   iconStyle: {

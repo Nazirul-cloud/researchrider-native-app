@@ -1,6 +1,6 @@
 const Courses = [
   {
-    id: "1",
+    id: "44",
     title: "Web Development",
     image: require("../../assets/course/web.jpg"),
     description:

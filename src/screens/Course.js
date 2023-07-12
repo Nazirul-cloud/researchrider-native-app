@@ -7,12 +7,13 @@ import {
   Touchable,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
-import Courses from "../api/Courseapi";
+import React, { useEffect, useState } from "react";
 import { useFonts, Nunito_700Bold } from "@expo-google-fonts/nunito";
 import AppLoading from "expo-app-loading";
+import Menu from "../component/Menu";
 
 const Course = ({ navigation }) => {
+  const [value, setValue] = useState("");
   let [fontsLoaded] = useFonts({
     Nunito_700Bold,
   });
@@ -21,23 +22,47 @@ const Course = ({ navigation }) => {
     <AppLoading />;
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://researchrider.xyz/course/all/");
+        const data = await response.json();
+        setValue(data); // Do something with the data
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const courseCard = ({ item }) => {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.courseContainer}>
           <View>
-            <Image
-              style={styles.cardImage}
-              source={item.image}
-              resizeMode="contain"
-            />
+            <Image style={styles.cardImage} source={{ uri: item.cover_pic }} />
           </View>
 
-          <Text style={styles.mainHeader}>{item.title}</Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.mainHeader}>{item.name}</Text>
 
-          <Text style={styles.description}>{item.description}</Text>
+            <View style={styles.buttonContainer}>
+              <View style={styles.dateContainer}>
+                <Image
+                  style={styles.iconStyle}
+                  source={require("../../assets/course/start2.png")}
+                />
+                <Text> {item.course_enroll_start_date}</Text>
+              </View>
 
-          <View style={styles.buttonContainer}>
+              <View style={styles.dateContainer}>
+                <Image
+                  style={styles.iconStyle}
+                  source={require("../../assets/course/end2.png")}
+                />
+                <Text> {item.course_enroll_end_date}</Text>
+              </View>
+            </View>
             <TouchableOpacity
               style={styles.buttonStyle}
               onPress={() =>
@@ -46,7 +71,7 @@ const Course = ({ navigation }) => {
                 })
               }
             >
-              <Text style={styles.buttonText}> course Details </Text>
+              <Text style={styles.buttonText}>{item.enrollment_fee} BDT</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -55,25 +80,32 @@ const Course = ({ navigation }) => {
   };
 
   return (
-    <FlatList
-      keyExtractor={(item) => item.id}
-      data={Courses}
-      renderItem={courseCard}
-    />
+    <View style={styles.container}>
+      <FlatList
+        keyExtractor={(item) => item.id}
+        data={value}
+        renderItem={courseCard}
+      />
+      <Menu />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingVertical: 30,
+  },
   cardImage: {
     width: "100%",
-    height: undefined,
-    aspectRatio: 1,
+    aspectRatio: 2,
+    borderWidth: 0.2,
+    borderColor: "gray",
   },
   mainContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
   },
   courseContainer: {
-    padding: 30,
     backgroundColor: "rgba(255, 255, 255, 0.90)",
     textAlign: "center",
     borderRadius: 5,
@@ -81,9 +113,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.5,
     shadowRadius: 8,
-    elevation: 8,
-    marginVertical: 30,
+    elevation: 1,
+    marginVertical: 10,
   },
+  textContainer: {
+    padding: 25,
+  },
+
   mainHeader: {
     fontSize: 22,
     color: "#344055",
@@ -94,16 +130,16 @@ const styles = StyleSheet.create({
     fontFamily: "Nunito_700Bold",
   },
   description: {
-    textAlign: "left",
+    textAlign: "center",
     paddingBottom: 15,
-    lineHeight: 20,
-    fontSize: 16,
+    lineHeight: 45,
+    fontSize: 20,
     color: "#7d7d7d",
   },
   buttonContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   buttonStyle: {
     backgroundColor: "#809fff",
@@ -113,11 +149,21 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    marginVertical: 15,
   },
   buttonText: {
     fontSize: 20,
     color: "#eee",
-    textTransform: "capitalize",
+    textTransform: "uppercase",
+  },
+  iconStyle: {
+    width: 25,
+    height: 25,
+    aspectRatio: 1,
+  },
+  dateContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
 
